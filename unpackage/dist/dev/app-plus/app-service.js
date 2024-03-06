@@ -1734,6 +1734,12 @@ This will fail in production if not fixed.`);
   const getHomeMultiData = () => {
     return hyRequest.get("/home/multidata", {});
   };
+  const getHomeData = (type, page) => {
+    return hyRequest.get("/home/data", {
+      type,
+      page
+    });
+  };
   const useHomeStore = defineStore("home", {
     state: () => {
       return {
@@ -1747,6 +1753,10 @@ This will fail in production if not fixed.`);
         const res = await getHomeMultiData();
         this.banners = res.data.banner.list || [];
         this.recommends = res.data.recommend.list || [];
+      },
+      // 获取列表的数据
+      async fetchHomeData(type, page) {
+        await getHomeData(type, page);
       }
     }
   });
@@ -1859,6 +1869,7 @@ This will fail in production if not fixed.`);
       const { banners, recommends } = storeToRefs(homeStore);
       onLoad(() => {
         homeStore.fetchHomeMultiData();
+        homeStore.fetchHomeData("pop", 1);
       });
       function handleBannerItemClick(link) {
         uni.navigateTo({

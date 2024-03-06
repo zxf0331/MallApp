@@ -29,6 +29,7 @@
 	
 	onLoad(() => {
 		homeStore.fetchHomeMultiData()
+		homeStore.fetchHomeData('pop', 1)
 	})
 	
 	// 轮播图点击事件

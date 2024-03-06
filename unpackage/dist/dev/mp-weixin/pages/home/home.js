@@ -21,6 +21,7 @@ const _sfc_main = {
     const { banners, recommends } = common_vendor.storeToRefs(homeStore);
     common_vendor.onLoad(() => {
       homeStore.fetchHomeMultiData();
+      homeStore.fetchHomeData("pop", 1);
     });
     function handleBannerItemClick(link) {
       common_vendor.index.navigateTo({
