@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "购物街",
+  "usingComponents": {
+    "tab-control": "../../components/tab-control/tab-control",
+    "home-banner": "./cpns/HomeBanner",
+    "home-recommend": "./cpns/HomeRecommend",
+    "home-popular": "./cpns/home-popular"
+  }
+}
