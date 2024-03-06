@@ -10,14 +10,21 @@
 		<tab-control 
 			:titles="['流行','新款','精选']"
 			@tabItemClick='handleTabItemClick'
-		>
-		</tab-control>
+		/>
+		<!-- 宫格组件 -->
+		<uni-grid :column="2" :show-border="false" :square="false" :highlight="true ">
+			<template v-for="(itemInfo) in goodsList[currentType].list" :key="itemInfo.iid">
+				<uni-grid-item>
+					<list-view :itemInfo='itemInfo'></list-view>
+				</uni-grid-item>
+			</template>
+		</uni-grid>
 	</view>
 </template>
 
 <script setup>
-	import { onLoad } from '@dcloudio/uni-app'
-	import { useHomeStore } from '@/store/home.js'
+	import { onLoad, onReachBottom } from '@dcloudio/uni-app'
+	import { useHomeStore, types } from '@/store/home.js'
 	import { storeToRefs } from 'pinia'
 	import { ref } from 'vue'
 	import HomeBanner from './cpns/HomeBanner.vue'
@@ -25,11 +32,20 @@
 	import HomePopular from './cpns/home-popular.vue'
 	
 	const homeStore = useHomeStore()
-	const { banners, recommends } = storeToRefs(homeStore)
+	const { banners, recommends, goodsList, currentType } = storeToRefs(homeStore)
 	
 	onLoad(() => {
 		homeStore.fetchHomeMultiData()
 		homeStore.fetchHomeData('pop', 1)
+		homeStore.fetchHomeData('new', 1)
+		homeStore.fetchHomeData('sell', 1)
+	})
+	
+	// 监听页面滚动到底部
+	onReachBottom(() => {
+		// console.log('onReachBottom'); // 加载对应分类的下一页数据
+		homeStore.fetchHomeData(currentType.value, goodsList.value[currentType.value].page + 1)
+		
 	})
 	
 	// 轮播图点击事件
@@ -42,6 +58,7 @@
 	// tab-control点击事件
 	function handleTabItemClick(index) {
 		// console.log(index)
+		homeStore.setCurrentType(types[index])
 	}
 </script>
 

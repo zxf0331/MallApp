@@ -13,3 +13,9 @@ $gFontSize: 28rpx;
 	flex-direction: $direction;
 	justify-content: $justify;
 }
+
+@mixin textEllipsis() {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}

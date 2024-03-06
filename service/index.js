@@ -1,5 +1,5 @@
 const TIME_OUT = 15000
-const BASE_URL = 'http://123.207.32.32:8000/'
+const BASE_URL = 'http://123.207.32.32:7888/api/hy66'
 
 
 class HYRequest{
