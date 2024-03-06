@@ -1,6 +1,11 @@
 <template>
-	<view class="goods-item">
+	<view class="goods-item" @click="handleItemClick">
+		<!-- #ifdef H5 -->
+		<img class="image" :src="itemInfo.show.img" />
+		<!-- #endif -->
+		<!-- #ifndef H5 -->
 		<image class="image" :lazy-load="true" :src="itemInfo.show.img" mode="widthFix"></image>
+		<!-- #endif -->
 		<view class="desc">
 			<view class="title">{{ itemInfo.title }}</view>
 			<view class="info">
@@ -13,12 +18,19 @@
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
 	itemInfo: {
 		type: Object,
 		default: () => {}
 	}
 })
+
+const emits = defineEmits(['itemClick'])
+
+function handleItemClick() {
+	emits('itemClick', props.itemInfo)
+}
+
 </script>
 
 <style lang="scss">

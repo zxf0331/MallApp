@@ -15,7 +15,7 @@
 		<uni-grid :column="2" :show-border="false" :square="false" :highlight="true ">
 			<template v-for="(itemInfo) in goodsList[currentType].list" :key="itemInfo.iid">
 				<uni-grid-item>
-					<list-view :itemInfo='itemInfo'></list-view>
+					<list-view :itemInfo='itemInfo' @itemClick='handleItemClick'></list-view>
 				</uni-grid-item>
 			</template>
 		</uni-grid>
@@ -59,6 +59,13 @@
 	function handleTabItemClick(index) {
 		// console.log(index)
 		homeStore.setCurrentType(types[index])
+	}
+	
+	// 点击商品跳转到详情页
+	function handleItemClick(itemInfo) {
+		uni.navigateTo({
+			url: '/pages/detail/detail?iid=' + itemInfo.iid
+		})
 	}
 </script>
 
